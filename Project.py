@@ -20,14 +20,19 @@ class ReservationSystem:
         self.file_name = "users.json"
         self.users = self.load_users()
 
+    #This function is used for already saved users in the ReservationSystem. It's job is to read the file containing the user's input of their email, name, password and date of birth
     def load_users(self):
         if os.path.exists(self.file_name):
             with open(self.file_name, "r") as file:
-                #If the file exists, it will open the file and give the data that is inside of it
                 return json.load(file)
         else:
             #Otherwise return an empty list if the file doesn't exist or does not have any content in it yet.
             return[]
+        
+    #This function's job is to write down information that is being inputted by the user when registering in the system and save it in the file we just created (users.json file)
+    def save_users(self):
+        with open(self.file_name, "w") as file:
+            json.dump(self.users, file, indent=4)
     
     #This function serves as the user interface for the main menu
     #Displays the options the user has when using the ReservationSystem
@@ -50,7 +55,8 @@ class ReservationSystem:
             raise ValidationError("Invalid Email Format")
         else:
             return email
-        
+
+    #For this function we are checking if the user has only inputted alphabetical letters for their name. Because realistically their name would not have a number or for example an exclamation mark in it.
     def name_validation(self, name):
         #Returns the name without spaces
         #isalpha() is a function that is used to make sure that the string only contains alphabetical letters (can't have alphabetical letters in your name)
@@ -59,12 +65,53 @@ class ReservationSystem:
         else:
             return name
 
+    #This function is used for prompting the user about their registration details (email, name, password etc.)
+        # And ensuring that the functions for validation that we made earlier are being used there
+    def userInput(self, prompt, validation_function=None):
+        while True:
+            try:
+                value = input(prompt)
+
+                #If there is a validation function eing used it will go through that validation_function (email & name validation) and make sure it follows the requirements
+                if validation_function:
+                    return validation_function(value)
+
+                #If it doesn't have a validation function associated with it, then we just continue as normal
+                else:
+                    return value
+                
+            #if we do run into an error in this process, we will then raise a ValidationError depending on where the user messed up in inputs.
+            except ValidationError as e:
+                print(e)
+            
+                
+    #This function is used for registering the user
     def register_user(self):
         print("Registration in Progress:")
-        #Didn't complete yet
-        emailCheck = True
-        nameCheck = True
+
+        #Using the userInput function we will ask the user for their email and pass the respected validation functions that we made to make sure the user isn't breaking any rules
+        #Some are empty because there isn't any need for a validation function for them.
+        email = self.userInput("Email: ", self.email_validation)
+        first_name = self.userInput("First Name: ", self.name_validation)
+        last_name = self.userInput("Last Name: ", self.name_validation)
+        password = self.userInput("Password: ")
+        date_of_birth = self.userInput("Date Of Birth: ")
+
+        #This loop checks if the user has already registered in the system by going through the file and checking if the new user being made shares the same email as another user.
+        for user in self.users:
+            if user["email"] == email:
+                print("Email has already been registered.")
+                #this return just breaks the loop once it finds the exact same email that is in the system.
+                return
+        #This puts the user inputted data into the file and saves it
+        new_user = User(email, first_name, last_name, password, date_of_birth)
+        self.users.append(new_user.user_data())
+        self.save_users()
+        print("Your Registration Has Been Successful")
+
         
+            
+            
 
     #This function focuses on grabbing user inputs for either signing up or logging into the ReservationSystem
     # The user can log out by pressing 3, any other input other than 1, 2 or 3 is not accepted in this program
@@ -76,14 +123,15 @@ class ReservationSystem:
 
             if choiceSelect == "1":
                 print("\nRegister/Signup selected")
+                self.register_user()
             elif choiceSelect == "2":
                 print("\nLogin selected")
             elif choiceSelect == "3":
                 print("\n Thank you for using our Reservation System")
                 onSwitch = False
-                
             else:
                 print("The choice you have selected is invalid. Try Again.")
+                
 #Part 2 Building the User (Changes are made in the ReservationSystem class)
 class User:
     #When there is a user in the ReservationSystem, the user must have these properties in order to be a user in the system
