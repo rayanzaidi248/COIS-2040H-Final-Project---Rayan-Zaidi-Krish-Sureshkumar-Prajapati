@@ -1,7 +1,6 @@
 #Final Project Assignment
 #Restaurant Reservation System
-#Group Members: Rayan Zaidi & Krish Sureshkumar Prajapati & Seyjal
-
+#Group Members: Rayan Zaidi, Krish Sureshkumar Prajapati & Seyjal Kaushik Guda
 #Importing certain plugins for file access and reading files
 
 import json
@@ -45,14 +44,11 @@ class ReservationSystem:
 
     #This function is used to check if the email is a valid email that is inputted by the user
     def email_validation(self, email):
-        #We use a Regex pattern to determine if the email is a valid email
-        #Regex is used in python to manipulate complex text patterns which in this case an email is a complex text pattern with an @ sign and
-        #a dot symbolizing either it is .com, .ca etc.
-        emailPattern = r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
-
-        #if the email doesn't have the general email pattern, then it has an invalid email format.
-        if not re.match(emailPattern, email):
-            raise ValidationError("Invalid Email Format")
+        if email.strip() == "":
+            raise ValidationError("Email can't be blank")
+        elif "@" not in email or "." not in email:
+            raise ValidationError("This is not a valid email format")
+        
         else:
             return email
 
@@ -64,6 +60,13 @@ class ReservationSystem:
             raise ValidationError("Name can only have letters")
         else:
             return name
+
+        #This is for every other verification (password,
+    def blank_verification(self, userinput):
+        if userinput.strip() == "":
+            raise ValidationError("You must have an input here")
+        else:
+            return userinput
 
     #This function is used for prompting the user about their registration details (email, name, password etc.)
         # And ensuring that the functions for validation that we made earlier are being used there
@@ -94,8 +97,8 @@ class ReservationSystem:
         email = self.userInput("Email: ", self.email_validation)
         first_name = self.userInput("First Name: ", self.name_validation)
         last_name = self.userInput("Last Name: ", self.name_validation)
-        password = self.userInput("Password: ")
-        date_of_birth = self.userInput("Date Of Birth: ")
+        password = self.userInput("Password: ", self.blank_verification)
+        date_of_birth = self.userInput("Date Of Birth: ", self.blank_verification)
 
         #This loop checks if the user has already registered in the system by going through the file and checking if the new user being made shares the same email as another user.
         for user in self.users:
@@ -155,4 +158,5 @@ class User:
 
 system = ReservationSystem()
 system.run()
-#Group Members: Rayan Zaidi, Krish Sureshkumar Prajapati & Seyjal Kaushik Guda
+
+
