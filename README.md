@@ -5,6 +5,12 @@ Object Oriented Programming Course Final Project
 
 ### Rayan Zaidi:
 
+#### Completed Part 1
+
+#### Completed Part 2
+
+#### Completed Part 3
+
 ### Krish Sureshkumar Prajapati:
 
 ### Seyjal Kaushik Guda:
