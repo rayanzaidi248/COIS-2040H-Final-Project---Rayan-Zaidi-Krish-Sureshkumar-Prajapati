@@ -167,7 +167,6 @@ class ReservationSystem:
             self.save_users()
             
             print("Reservation modified successfully!")
-        self.ReservationMenu()
     
     def cancelReservation(self, user):
         print("\nCancel Reservation selected")
@@ -183,7 +182,6 @@ class ReservationSystem:
             self.save_users()
             
             print("Reservation cancelled successfully!")
-        self.ReservationMenu()
 
     #This function is used to check if the email is a valid email that is inputted by the user
     def email_validation(self, email):
