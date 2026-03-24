@@ -73,7 +73,8 @@ class ReservationSystem:
                 self.cancelReservation(self.current_user)
 
             elif ReservationChoice == "5":
-                print("Logging you out...")
+                print("Logging you out.")
+                self.current_user = None
                 ReservationMenuSwitch = False
                 
             else:
@@ -321,7 +322,7 @@ class ReservationSystem:
             if userVerified == False:
 
                 #This will give a set of options what the user can do now if they messed up their login information or if they don't have an account
-                print("The password and/or username is incorrect\n")
+                print("The password or username you've entered is incorrect\n")
                 print("What do you want to do now?")
                 print("1. Try Logging in Again")
                 print("2. Register for An Account")
