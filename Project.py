@@ -203,18 +203,6 @@ class ReservationSystem:
                 else:
                     print("Invalid Choice Try Again")
 
-
-                        
-
-            
-        
-            
-        
-       
-        
-        
-            
-
     #This function focuses on grabbing user inputs for either signing up or logging into the ReservationSystem
     # The user can log out by pressing 3, any other input other than 1, 2 or 3 is not accepted in this program
     def runMainMenu(self):
@@ -255,6 +243,36 @@ class User:
             "password": self.password,
             "date_of_birth": self.date_of_birth
             }
+    
+    #Part 4 of ReservationSystem
+    #making a resevartion function
+    def makeReservation(self):
+        print("\nMake a Reservation selected")
+        num_days = input("Number of days: ")
+        from_date = input("From date (YYYY-MM-DD): ")
+        to_date = input("To date (YYYY-MM-DD): ")
+        num_persons = input("Number of persons: ")
+        num_rooms = input("Number of rooms: ")
+        if num_days == "" or from_date == "" or to_date == "" or num_persons == "" or num_rooms == "":
+            print("Please fill in all the fields.")
+        else:            
+            onSwitch = True
+            while onSwitch == True:
+                print("\nPlease confirm your reservation details:")
+                print(f"Number of days: {num_days}")
+                print(f"From date: {from_date}")
+                print(f"To date: {to_date}")
+                print(f"Number of persons: {num_persons}")
+                print(f"Number of rooms: {num_rooms}")
+                confirmation = input("Confirm reservation? (y/n): ")
+                if confirmation.lower() == "yes" or confirmation.lower() == "y":
+                    print("Reservation confirmed!")
+                    onSwitch = False
+                elif confirmation.lower() == "no" or confirmation.lower() == "n":
+                    self.makeReservation()
+                    onSwitch = False
+                else:
+                    print("Invalid input. Please enter 'yes' or 'no'.")
 
 system = ReservationSystem()
 system.runMainMenu()
