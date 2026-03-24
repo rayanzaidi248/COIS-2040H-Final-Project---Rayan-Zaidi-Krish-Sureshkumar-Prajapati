@@ -329,28 +329,32 @@ class ReservationSystem:
                 print("2. Register for An Account")
                 print("3. Exit")
 
-                #We will take this input as a number and do things accordingly
-                next_choice = input("Enter your choice: ")
-
-                #If they want to login again we just start from the beginning of the loop by using continue and it will again prompt the user to put in their login information
-            
-                if next_choice == "1":
-                    continue
-                #If they don't have an account they type in 2 and they trigger the register_user() function to register the user into the system and save it into our file
-                elif next_choice == "2":
-                    login_userswitch = False
-                    self.register_user()
-                    
-                #if they don't want to login again or want to register for an account they will go back to the mainMenu() where they can exit the program from there            
-                elif next_choice == "3":
-                    login_userswitch = False
-                    self.mainMenu()
-
-                #Otherwise if they type anything other than these 3 options it will read it as an invalid option and tell them to try again (heading back to the top of this while loop)        
-                else:
-                    print("Invalid Choice Try Again")
-
-    #This function focuses on grabbing user inputs for either signing up or logging into the ReservationSystem
+                try:
+                    #We will take this input as a number and do things accordingly
+                    next_choice = input("Enter your choice: ").strip()
+                
+                    #If they want to login again we just start from the beginning of the loop by using continue and it will again prompt the user to put in their login information
+                    if next_choice == "1":
+                        continue
+                
+                    #If they don't have an account they type in 2 and they trigger the register_user() function to register the user into the system and save it into our file
+                    elif next_choice == "2":
+                        login_userswitch = False
+                        self.register_user()
+                
+                    #if they don't want to login again or want to register for an account they will go back to the mainMenu() where they can exit the program from there
+                    elif next_choice == "3":
+                        login_userswitch = False
+                        return
+                
+                    #Otherwise if they type anything other than these 3 options it will read it as an invalid option and tell them to try again
+                    else:
+                        raise ValidationError("Invalid choice. Try again.")
+                
+                except ValidationError as e:
+                    print(e)
+                
+                    #This function focuses on grabbing user inputs for either signing up or logging into the ReservationSystem
     # The user can log out by pressing 3, any other input other than 1, 2 or 3 is not accepted in this program
     def runMainMenu(self):
         onSwitch = True
