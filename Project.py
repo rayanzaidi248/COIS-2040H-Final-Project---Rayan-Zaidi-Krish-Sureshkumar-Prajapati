@@ -45,9 +45,9 @@ class ReservationSystem:
         print("================================================")
         
     def ReservationMenu(self):
-        ReservationMenuSwitch = True
-        while ReservationMenuSwitch == True:
-            
+    ReservationMenuSwitch = True
+    while ReservationMenuSwitch == True:
+        try:
             print("\n======== Reservation Menu =========")
             print("1. View Reservation")
             print("2. Make Reservation")
@@ -55,15 +55,16 @@ class ReservationSystem:
             print("4. Cancel Reservation")
             print("5. Logout")
 
-            ReservationChoice = input("Enter your choice: ")
+            ReservationChoice = input("Enter your choice: ").strip()
+
             if ReservationChoice == "1":
-                print ("You have selected to view your reservation")
+                print("You have selected to view your reservation")
                 self.viewReservations(self.current_user)
-                
+
             elif ReservationChoice == "2":
                 print("You have selected to make a reservation")
                 self.makeReservation(self.current_user)
-                
+
             elif ReservationChoice == "3":
                 print("You have selected to modify your reservation")
                 self.modifyReservation(self.current_user)
@@ -76,7 +77,7 @@ class ReservationSystem:
                 print("Logging you out.")
                 self.current_user = None
                 ReservationMenuSwitch = False
-                
+
             else:
                 raise ValidationError("The choice you have selected is not valid. Try Again")
 
@@ -352,20 +353,24 @@ class ReservationSystem:
     #This function focuses on grabbing user inputs for either signing up or logging into the ReservationSystem
     # The user can log out by pressing 3, any other input other than 1, 2 or 3 is not accepted in this program
     def runMainMenu(self):
-        onSwitch = True
-        while onSwitch == True:
+    onSwitch = True
+    while onSwitch == True:
+        try:
             self.mainMenu()
-            choiceSelect = input("Enter your choice: ")
+            choiceSelect = input("Enter your choice: ").strip()
 
             if choiceSelect == "1":
                 print("\nRegister/Signup selected")
                 self.register_user()
+
             elif choiceSelect == "2":
                 print("\nLogin selected")
                 self.login_user()
+
             elif choiceSelect == "3":
-                print("\n Thank you for using our Reservation System")
+                print("\nThank you for using our Reservation System")
                 onSwitch = False
+
             else:
                 raise ValidationError("The choice you have selected is invalid. Try Again.")
 
