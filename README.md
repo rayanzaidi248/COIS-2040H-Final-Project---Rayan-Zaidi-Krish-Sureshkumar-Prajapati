@@ -23,5 +23,6 @@ Added exception handling for cancel reservation\
 Added exception handling for modify reservation\
 Refined login error message and clear user on logout\
 Fixed indentation and try-except structure for menu and reservation methods\
+Handled invalid login follow-up choice with ValidationError
 
 ### Completed Part 10
