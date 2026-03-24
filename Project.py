@@ -307,6 +307,7 @@ class User:
             print("Your reservations:")
             for i, res in enumerate(user['reservations'], 1):
                 print(f"{i}. Days: {res['num_days']}, From: {res['from_date']}, To: {res['to_date']}, Persons: {res['num_persons']}, Rooms: {res['num_rooms']}")
+    
     def modifyReservation(self, user):
         print("\nModify Reservation selected")
         print("Your reservations:")
@@ -336,7 +337,23 @@ class User:
             self.save_users()
             
             print("Reservation modified successfully!")
-
+        self.ReservationMenu()
+    
+    def cancelReservation(self, user):
+        print("\nCancel Reservation selected")
+        print("Your reservations:")
+        for i, res in enumerate(user['reservations'], 1):
+            print(f"{i}. Days: {res['num_days']}, From: {res['from_date']}, To: {res['to_date']}, Persons: {res['num_persons']}, Rooms: {res['num_rooms']}")
+        reservation_choice = input("Enter the number of the reservation you want to cancel: ")
+        if reservation_choice.isdigit() and 1 <= int(reservation_choice) <= len(user['reservations']):
+            reservation_index = int(reservation_choice) - 1
+            del user['reservations'][reservation_index]
+            
+            # Save back to users.json
+            self.save_users()
+            
+            print("Reservation cancelled successfully!")
+        self.ReservationMenu()
 
 system = ReservationSystem()
 system.runMainMenu()
