@@ -66,6 +66,7 @@ class ReservationSystem:
                 
             elif ReservationChoice == "3":
                 print("You have selected to modify your reservation")
+                self.modifyReservation(self.current_user)
 
             elif ReservationChoice == "4":
                 print("You have selected to cancel a reservation")
@@ -306,7 +307,36 @@ class User:
             print("Your reservations:")
             for i, res in enumerate(user['reservations'], 1):
                 print(f"{i}. Days: {res['num_days']}, From: {res['from_date']}, To: {res['to_date']}, Persons: {res['num_persons']}, Rooms: {res['num_rooms']}")
-    
+    def modifyReservation(self, user):
+        print("\nModify Reservation selected")
+        print("Your reservations:")
+        for i, res in enumerate(user['reservations'], 1):
+            print(f"{i}. Days: {res['num_days']}, From: {res['from_date']}, To: {res['to_date']}, Persons: {res['num_persons']}, Rooms: {res['num_rooms']}")
+        reservation_choice = input("Enter the number of the reservation you want to modify: ")
+        if reservation_choice.isdigit() and 1 <= int(reservation_choice) <= len(user['reservations']):
+            reservation_index = int(reservation_choice) - 1
+            reservation = user['reservations'][reservation_index]
+            print("Enter new details (leave blank to keep current value):")
+            num_days = input(f"Number of days ({reservation['num_days']}): ") or reservation['num_days']
+            from_date = input(f"From date ({reservation['from_date']}): ") or reservation['from_date']
+            to_date = input(f"To date ({reservation['to_date']}): ") or reservation['to_date']
+            num_persons = input(f"Number of persons ({reservation['num_persons']}): ") or reservation['num_persons']
+            num_rooms = input(f"Number of rooms ({reservation['num_rooms']}): ") or reservation['num_rooms']
+            
+            # Update the reservation
+            user['reservations'][reservation_index] = {
+                "num_days": num_days,
+                "from_date": from_date,
+                "to_date": to_date,
+                "num_persons": num_persons,
+                "num_rooms": num_rooms
+            }
+            
+            # Save back to users.json
+            self.save_users()
+            
+            print("Reservation modified successfully!")
+
 
 system = ReservationSystem()
 system.runMainMenu()
