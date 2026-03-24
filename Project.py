@@ -74,7 +74,6 @@ class ReservationSystem:
 
             elif ReservationChoice == "5":
                 print("Logging you out...")
-                self.mainMenu()
                 ReservationMenuSwitch = False
                 
             else:
