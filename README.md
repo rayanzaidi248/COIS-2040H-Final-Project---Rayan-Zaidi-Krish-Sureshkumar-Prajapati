@@ -23,6 +23,7 @@ designed reservation menu system
 added functionality to logout from once user is logged into reservationmenu
 
 ### Krish Sureshkumar Prajapati:
+Parts 4-8 allow users to manage their reservations after logging into their account. Once logged in, users can view their existing reservations, and if none are found, the system will display a message saying “No reservation found.” Users can also make a new reservation by entering details such as the number of days, dates, number of persons, and number of rooms. All fields must be filled correctly before the reservation is saved. In addition, users have the option to modify their existing reservation, where they can update any details, and the system will save the changes. If a user chooses to cancel a reservation, it will be permanently deleted from their account. Finally, users can log out at any time, which will return them to the main menu.
 
 ### Seyjal Kaushik Guda:
 
